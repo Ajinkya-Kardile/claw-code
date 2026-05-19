@@ -928,12 +928,12 @@ fn wire_model_for_base_url<'a>(
     if lowered_prefix == "openai" {
         let trimmed_base_url = base_url.trim_end_matches('/');
         let default_openai = DEFAULT_OPENAI_BASE_URL.trim_end_matches('/');
-        if matches!(lowered_prefix.as_str(), "xai" | "grok" | "kimi" | "gemini") {
+        if matches!(lowered_prefix.as_str(), "xai" | "grok" | "kimi" | "gemini" | "gemma") {
             return Cow::Borrowed(&model[pos + 1..]);
         }
         if config.provider_name == "OpenAI" && trimmed_base_url != default_openai {
             // Only preserve the full slug if it's NOT a model we want to strip
-            if !model.contains("gemini") {
+            if !model.contains("gemini") && !model.contains("gemma") {
                 return Cow::Borrowed(model);
             }
         }
